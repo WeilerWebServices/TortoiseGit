@@ -1,0 +1,4 @@
+#summary Howto Debug TortoiseGit
+#labels Featured
+
+Moved to: https://tortoisegit.org/debug

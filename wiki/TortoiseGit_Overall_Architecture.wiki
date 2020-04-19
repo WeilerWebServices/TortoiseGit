@@ -1,0 +1,3 @@
+#summary TortoiseGit Overall architecture
+
+Moved to https://github.com/TortoiseGit/TortoiseGit/blob/master/architecture.txt

@@ -1,0 +1,45 @@
+This article documents some of the main steps for releasing a new version.
+
+* Upgrade version number in (for preview releases don't commit):
+  * doc/doc.build.include
+  * src/version.h
+  * src/TortoiseGitSetup/VersionNumberInclude.wxi
+
+* Make sure crash-report is enabled in version.h (but don't commit this change)
+* For a preview release enable "PREVIEW" in version.h (but don't commit this change)
+
+* Sync Transifex translations (for stable releases)
+* Check translations for:
+  * fix ?
+  * fix ?
+  * fix ?
+  * fix »
+  * fix <span
+
+* Create new DrDump.com version (for stable releases)
+
+* Update spell checker dictionaries
+
+* Build docs
+
+* Update changelog
+
+* Build TortoiseGit
+
+* Upload release
+
+* Tag commit (for stable releases)
+
+* Update website
+  * RSS feed
+  * Download languages
+  * Version number of latest stable
+  * Update manual
+
+* Send annoucement mail to mailing list (for stable releases)
+
+* Auto-Updater
+  * Prepare changelog (wrap at column 86)
+  * Update version.txt (sync with shipped languages)
+
+* Mark old release as deprecated on DrDump.com (for stable releases)

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect1 SYSTEM "../../../dtd/dblite.dtd">
+<sect1 id="tgit-dug-cleanup">
+	<title>Cleanup</title>
+	<indexterm>
+		<primary>cleanup</primary>
+	</indexterm>
+	<?dbhh topicname="HIDD_CLEAN"?>
+	<para>
+		 In order to remove untracked or ignored files from the working tree use
+		 <menuchoice>
+			<guimenu>TortoiseGit</guimenu>
+			<guimenuitem>Cleanup</guimenuitem>
+		</menuchoice>.
+		Then a dialog comes up which allows you to clean up the working tree by recursively removing files that are not under version control or ignored,
+		starting from the current directory <emphasis>or</emphasis> on the whole working tree (depends on version of installed git).
+		<figure id="tgit-dug-clean-dia-1">
+			<title>Clean dialog</title>
+			<graphic fileref="../images/clean.png"/>
+		</figure>
+	</para>
+	<para>
+		<guilabel>Clean all untracked files</guilabel>
+		This removes all untracked files, including those ignored by Git.
+		This is the cleanest option.
+	</para>
+	<para>
+		<guilabel>Clean only non-ignore untracked files</guilabel>
+		This removes untracked files, but excluding those ignored by Git.
+	</para>
+	<para>
+		<guilabel>Clean only ignored files</guilabel>
+		This removes only files ignored by Git.
+	</para>
+	<para>
+		<guilabel>Remove untracked directories</guilabel>
+		This removes untracked directories too.
+	</para>
+	<para>
+		<guilabel>Do not use recycle bin</guilabel>
+		Use this option if you want to delete those files directly and permanently.
+		Make sure you do not regret!
+	</para>
+	<para>
+		<guilabel>Dry run</guilabel>
+		This just gives the list of files to be deleted, but it does not perform any deletion.
+	</para>
+	<para>
+		<guilabel>Submodules</guilabel>
+		This also cleans submodules recursively.
+	</para>
+	<para>
+		You can find more information at <xref linkend="git-clean(1)"/>.
+	</para>
+</sect1>

@@ -1,0 +1,52 @@
+#include <Windows.h>
+#ifdef _WIN32
+LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+#include "../version.h"
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION FILEVER
+ PRODUCTVERSION PRODUCTVER
+ FILEFLAGSMASK VS_FFI_FILEFLAGSMASK
+#ifdef _DEBUG
+ FILEFLAGS VS_FF_DEBUG
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS VOS_NT_WINDOWS32
+ FILETYPE VFT_DLL
+ FILESUBTYPE VFT2_UNKNOWN
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "CompanyName", "https://tortoisegit.org/"
+            VALUE "FileDescription", "TortoiseGit shell extension client"
+            VALUE "FileVersion", STRFILEVER
+            VALUE "LegalCopyright", "Copyright (C) 2012-2020 TortoiseGit, Copyright (C) 2007-2018 TortoiseSVN"
+#ifdef _WIN64
+            VALUE "OriginalFilename", "TortoiseGitStub.dll"
+            VALUE "InternalName", "TortoiseGitStub"
+#else
+            VALUE "OriginalFilename", "TortoiseGitStub32.dll"
+            VALUE "InternalName", "TortoiseGitStub32"
+#endif
+            VALUE "ProductName", "TortoiseGit"
+            VALUE "ProductVersion", STRPRODUCTVER
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+/////////////////////////////////////////////////////////////////////////////
+
+

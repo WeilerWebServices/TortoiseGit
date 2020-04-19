@@ -1,0 +1,3 @@
+#summary Tips and tricks for SSH/PuTTY
+
+Moved to: https://tortoisegit.org/docs/tortoisegit/tgit-ssh-howto.html

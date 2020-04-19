@@ -1,0 +1,3 @@
+#summary How to translate TortoiseGit
+
+Moved to: https://tortoisegit.org/translate

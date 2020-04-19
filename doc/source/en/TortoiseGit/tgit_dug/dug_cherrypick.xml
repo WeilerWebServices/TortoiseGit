@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE sect1 SYSTEM "../../../dtd/dblite.dtd">
+<sect1 id="tgit-dug-cherrypick">
+	<title>Cherry picking</title>
+	<?dbhh topicname="HIDD_REBASECHERRYPICK"?>
+	<indexterm>
+		<primary>Cherry pick</primary>
+	</indexterm>
+	<para>
+		<link linkend="git-cherry-pick(1)">Cherry-picking</link> in TortoiseGit is invoked from the <link linkend="tgit-dug-showlog">Revision Log Dialog</link>. Within this dialog, select the commit(s) to cherry-pick, then right-click on one of the selected commits to pop up the context menu. Select <guilabel>Cherry Pick this commit...</guilabel> (or <guilabel>Cherry Pick select commits...</guilabel> if more than one commit is selected).
+	</para>
+	<para>
+		The Cherry Pick dialog will be shown.
+		<figure id="tgit-dug-cherrypick-dia-cherrypickdialog">
+			<title>Cherry Pick dialog</title>
+			<graphic fileref="../images/GitCherryPick.png"/>
+		</figure>
+	</para>
+	<para>
+		The Cherry Pick dialog is similar to the <link linkend="tgit-dug-rebase">Rebase dialog</link>. The top table displays one line for each selected commit to cherry-pick. Buttons below it control the actions (Pick, Squash, Edit, Skip) and the order in which multiple commits are picked. Selecting a line shows the files affected by the commit.
+	</para>
+	<important>
+		<title>Conflicts</title>
+		<para>
+			Although major merge work is done by git automatically while cherry-picking, a conflict may happen during cherry-picking (i.e., a file was modified in your current branch and also in one or more commits you are cherry-picking),
+			please see <xref linkend="tgit-dug-conflicts"/> on how to resolve conflicts.
+		</para>
+		<para>
+			Please note, that "REMOTE"/"theirs" in the conflict editor refers to the changes your are picking and "LOCAL"/"mine" to your HEAD version in your working tree.
+		</para>
+	</important>
+	<para>
+		You can find more information at <xref linkend="git-cherry-pick(1)"/>.
+	</para>
+</sect1>

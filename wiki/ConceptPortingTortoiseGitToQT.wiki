@@ -1,0 +1,104 @@
+#summary Concept of Porting TortoiseGit to QT.
+#labels Phase-Design,Phase-Requirements
+
+= Introduction =
+
+TortoiseGit is based on the Microsoft Foundation Classes (MFC) of Visual Studio.
+The old fashioned MFC framework has many limitations in modern software UI design
+and it is not available in Express Edition of Visual Studio.
+
+A new GUI-Toolkit should support the most important Operating Systems (Windows, Linux, MacOSX).
+
+This page is created to bring together some ideas to port TGit to the GUI Platform QT.
+
+Information about QT: http://www.qt-project.org.
+
+== Applications using QT ==
+
+  * VLC
+  * KDE
+  * Dreamworks Movie Tools
+  * Rohde & Schwarz Oscillocopes  
+  * DFS - Deutsche Flugsicherung (Munich Airport)
+  * Adobe Photoshop Album
+  * Autodesk Maja
+  * Google Earth
+  * Skype
+  * VirtualBox
+  * Netflix
+  * ...
+
+== Why do i like QT == 
+  * Cross platform: Support almost all Desktop and Mobile platforms (http://qt-project.org/doc/qt-5/supported-platforms.html)
+  * A lot of useful base classes in QtCore with things like list, stringclasses, vectors, dictionaries,.... (http://qt-project.org/doc/qt-5/classes.html)
+  * A lot of GUI elements like list, tree views, grids, labels, webkit webbrowser, .... (http://qt-project.org/doc/qt-5/classes.html)
+  * GUI elements are placed in layout with automatic resizing.
+  * Automatic extraction of Text from Source for translation with QtLinguist. (TortoiseGit currently uses po format plus a self-made converter ResText)
+  * Styleable GUI with Stylesheets (QSS). Similar to Cascading Style Sheets)
+  * UI is defined in QtDesigner and is based on an XML-File (.ui).
+  * Modular Design. Extensions for Multimedia, XML, ....
+  * Great OpenGL Support
+  * Model View System to abstract data from the GUI. A data model can be attached to one or more TreeViews
+  * QT Resource File allow to embed any data in the executable. This will be accessed like a file system.
+
+== QT Examples ==
+
+SubmoduleUpdate dialog in default design:
+
+https://lh3.googleusercontent.com/-_jUNXn4MDZc/UthZE_h_xLI/AAAAAAAAAAM/Q5pEr01AS9I/s1600/TGitDefaultStyle.PNG
+
+The same dialog styled with QSS:
+
+https://lh4.googleusercontent.com/-MfbLNvXK5To/UthZK84IuII/AAAAAAAAAAY/L8EhOcvJPmY/s1600/SimpleStyledDialogWithQss.PNG
+
+= Porting Roadmap =
+
+  * Converting MFC Resource Files
+  Rebuilding all dialogs in QtDesigner is a lot of work.
+  It is much better to write a converter from MFC RC to QT UI.
+  There was some tools like KDAB Knut that do this task, but
+  AFAIK it is not available anymore.
+
+  The best way is to write a converter in python that is based
+  on a real parser like ply to read Microsoft RC files and
+  build initial UI files with this data. Of course, this ui files
+  must be afterwards edited (e. g. place elements in layouts),
+
+  Since mfc2qt might be also interesting for other project,
+  there is a git repo at gitgub for that: 
+  https://github.com/dbcb/mfc2qt
+
+== RC Porting Steps ==
+
+  * mfc2qt --create-qrc TortoiseProcENG.rc tortoise_proc.qrc
+  Creates an Qt Resource with the images, icons, ... 
+  * mfc2qt -- create-dialog-list TortoiseProcENG.rc tortoise_proc_dialog.list
+  This will extract all Dialog IDD's and save them in the file tortoise_proc_dialog.list.
+  The developer will have to edit tortoise_proc.list and must  define a class name
+  for every dialog.
+  * mfc2qt --create-control-list TortoiseProcENG.rc tortoise_proc_control.list
+  This will extract the type of all controls used in all dialogs. 
+  The developer must define the qt replacements for
+  all all non standard guy elements (e.g scintilla)
+  * mfc2qt --convert-dialogs -d tortoise_proc_dialog.list -c tortoise_proc_control.list ./qtui
+
+mfc2qt must provide some templates for the source code generation.
+
+After all Dialogs are converted, they must be edited:
+  * Place gui elements in layouts
+  * Correct conversion errors.
+  * ...
+
+== Sourcecode ==
+
+In the next step the existing source code must be added/ported
+to the new class files. Since QT support much more powerful
+controls like Model/view, signal/slots etc, developers must think about
+a better way to represent the data in the GUI.
+
+= Internal Reference Links =
+
+  * [https://groups.google.com/forum/#!topic/tortoisegit-dev/FKwoflxEEVk Dev Group - TortoiseGit QT?]
+  * #Issue 2203
+
+... to be continued

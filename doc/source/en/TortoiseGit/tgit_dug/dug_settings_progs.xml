@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sect2 SYSTEM "../../../dtd/dblite.dtd">
+<sect2 id="tgit-dug-settings-progs">
+	<title>External Program Settings</title>
+	<para>
+		Here you can define your own programs that TortoiseGit
+		should use. The default setting is to use tools
+		which are installed alongside TortoiseGit.
+	</para>
+	<para>
+		Read <xref linkend="tgit-dug-diff-tools"/> for a list of some of the
+		external diff/merge programs that people are using with TortoiseGit.
+	</para>
+	<sect3 id="tgit-dug-settings-Diff">
+		<title>Diff Viewer</title>
+		<?dbhh topicname="HIDD_SETTINGSPROGSDIFF"?>
+		<figure id="tgit-dug-settings-dia-5">
+			<title>The Settings Dialog, Diff Viewer Page</title>
+			<graphic fileref="../images/SettingsProgs.png"/>
+		</figure>
+		<para>
+			An external diff program may be used for comparing different
+			revisions of files. The external program will need to
+			obtain the filenames from the command line, along with
+			any other command line options. TortoiseGit uses
+			substitution parameters prefixed with <literal>%</literal>.
+			When it encounters one of these it will substitute the
+			appropriate value. The order of the parameters will depend
+			on the Diff program you use.
+			<variablelist>
+				<varlistentry>
+					<term condition="pot">%base</term>
+					<listitem>
+						<para>
+							The original file without your changes
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term condition="pot">%bname</term>
+					<listitem>
+						<para>
+							The window title for the base file
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term condition="pot">%mine</term>
+					<listitem>
+						<para>
+							Your own file, with your changes
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term condition="pot">%yname</term>
+					<listitem>
+						<para>
+							The window title for your file
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term condition="pot">%bpath</term>
+					<listitem>
+						<para>
+							Full path to the original file
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term condition="pot">%ypath</term>
+					<listitem>
+						<para>
+							Full path to your file
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term condition="pot">%brev</term>
+					<listitem>
+						<para>
+							The revision of the original file, if available
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term condition="pot">%yrev</term>
+					<listitem>
+						<para>
+							The revision of the second file, if available
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term condition="pot">%wtroot</term>
+					<listitem>
+						<para>
+							Path to the working tree
+						</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</para>
+		<para>
+			The window titles are not pure filenames.
+			TortoiseGit treats that as a name to display and creates
+			the names accordingly. So e.g. if you're doing a
+			diff from a file in revision 123 with a file
+			in your working tree, the names will be
+			<filename>filename: revision 123</filename>
+			and
+			<filename>filename: working tree</filename>
+		</para>
+		<para>
+			For example, with ExamDiff Pro:
+<screen>
+C:\Path-To\ExamDiff.exe %base %mine --left_display_name:%bname
+    --right_display_name:%yname
+</screen>
+			or with KDiff3:
+<screen>
+C:\Path-To\kdiff3.exe %base %mine --L1 %bname --L2 %yname
+</screen>
+			or with WinMerge:
+<screen>
+C:\Path-To\WinMerge.exe -e -ub -dl %bname -dr %yname %base %mine
+</screen>
+			or with Araxis:
+<screen>
+C:\Path-To\compare.exe /max /wait /title1:%bname /title2:%yname
+    %base %mine
+</screen>
+		</para>
+<!--
+		<para>
+			You can also specify a different diff tool to use on Git
+			properties. Since these tend to be short simple text strings, you
+			may want to use a simpler more compact viewer.
+		</para>
+-->
+		<para>
+			If you have configured an alternate diff tool, you can access
+			TortoiseGitMerge <emphasis>and</emphasis> the third party tool
+			from the context menus.
+			<menuchoice>
+				<guimenu>Context menu</guimenu>
+				<guimenuitem>Diff</guimenuitem>
+			</menuchoice>
+			uses the primary diff tool, and
+			<keycap>Shift</keycap>+
+			<menuchoice>
+				<guimenu>Context menu</guimenu>
+				<guimenuitem>Diff</guimenuitem>
+			</menuchoice>
+			uses the secondary diff tool.
+		</para>
+		<sect4 id="tgit-dug-settings-Diff-unified-diff-viewer">
+			<title>Unified-Diff/GNU Diff/Patch File Viewer</title>
+			<indexterm>
+				<primary>unified-diff viewer</primary>
+				<primary>GNU diff viewer</primary>
+				<primary>patch file viewer</primary>
+			</indexterm>
+			<para>
+				Instead of TortoiseUDiff an external viewer program for unified-diff files (GNU diff or patch files) may be used.
+				Basically, there is no parameter required - the file name if the unified diff file to be opened will be appended automatically.
+				If you need to pass it as a different parameter the substitution <literal>%1</literal> can be used.
+				There also is the parameter substitution <literal>%title</literal> available for passing the title to be shown in the title bar (i.e., meta data of the diff).
+			</para>
+			<para>
+				For example, with Notepad2 (shipped with TortoiseGit):
+<screen>
+Notepad2.exe /s "Diff Files" /t %title
+</screen>
+				or (equivalent)
+<screen>
+Notepad2.exe /s "Diff Files" /t %title %1
+</screen>
+			</para>
+			<para>
+				If you have configured an alternate unified diff tool, you can access
+				TortoiseGitUDiff <emphasis>and</emphasis> the third party tool
+				from the context menus. When you hold the <keycap>Shift</keycap>-key
+				while opening the context menu the secondary unified diff tool is started.
+			</para>
+		</sect4>
+	</sect3>
+	<sect3 id="tgit-dug-settings-Merge">
+		<title>Merge Tool</title>
+		<?dbhh topicname="HIDD_SETTINGSPROGSMERGE"?>
+		<figure id="tgit-dug-settings-dia-5a">
+			<title>The Settings Dialog, Merge Tool Page</title>
+			<graphic fileref="../images/SettingsMergeTool.png"/>
+		</figure>
+		<para>
+			An external merge program used to resolve conflicted
+			files. Parameter substitution is used in the same way
+			as with the Diff Program.
+			<variablelist>
+				<varlistentry>
+					<term condition="pot">%base</term>
+					<listitem>
+						<para>
+							the original file without your or
+							the others changes
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term condition="pot">%bname</term>
+					<listitem>
+						<para>
+							The window title for the base file
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term condition="pot">%mine</term>
+					<listitem>
+						<para>
+							your own file, with your changes
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term condition="pot">%yname</term>
+					<listitem>
+						<para>
+							The window title for your file
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term condition="pot">%theirs</term>
+					<listitem>
+						<para>
+							the file as it is in the repository
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term condition="pot">%tname</term>
+					<listitem>
+						<para>
+							The window title for the file in the repository
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term condition="pot">%merged</term>
+					<listitem>
+						<para>
+							the conflicted file, the result of
+							the merge operation
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term condition="pot">%mname</term>
+					<listitem>
+						<para>
+							The window title for the merged file
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term condition="pot">%wtroot</term>
+					<listitem>
+						<para>
+							Path to the working tree
+						</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</para>
+		<para>
+			For example, with Perforce Merge:
+<screen>
+C:\Path-To\P4Merge.exe %base %theirs %mine %merged
+</screen>
+			or with KDiff3:
+<screen>
+C:\Path-To\kdiff3.exe %base %mine %theirs -o %merged
+    --L1 %bname --L2 %yname --L3 %tname
+</screen>
+			or with Araxis:
+<screen>
+C:\Path-To\compare.exe /max /wait /3 /title1:%tname /title2:%bname
+    /title3:%yname %theirs %base %mine %merged /a2
+</screen>
+			or with WinMerge (2.12 or later):
+<screen>
+C:\Path-To\WinMergeU.exe /e /ub /fr /wl /wm /dl %bname /dm %tname /dr %yname  %base %theirs %mine /o %merged /ar
+</screen>
+		</para>
+		<para>
+			TortoiseGit creates temporary files with similar file names as the conflicted file (<filename>CONFLICTED.BASE.EXT</filename>, <filename>CONFLICTED.LOCAL.EXT</filename> and <filename>CONFLICTED.REMOTE.EXT</filename>).
+			These files are automatically removed when the conflict is marked as resolved using TortoiseGit, TortoiseGitMerge, or TortoiseGitIDiff.
+		</para>
+		<para>
+			When using an external tool, a conflicted file needs to be marked as revolved in TortoiseGit manually (doing so also removes the temporary files).
+			This can be simplified and might also be automated: TortoiseGit can be configured to synchronously executing the merge tool (<guilabel>Block TortoiseGit while executing the external merge tool</guilabel>). Then TortoiseGit waits until the external merge tool is closed and asks whether to resolve the conflict (the temporary files are removed in any case). If the external merge tool provides a proper exit code (0 for success) you can trust the exit code to automatically mark the conflicted file as resolved (as Git does, cf. <xref linkend="git-mergetool(1)"/>).
+		</para>
+	</sect3>
+	<sect3 id="tgit-dug-settings-Progs-Adv">
+		<title>Diff/Merge Advanced Settings</title>
+		<?dbhh topicname="HIDD_SETTINGSPROGSADV"?>
+		<para>
+			<figure id="tgit-dug-settings-dia-6">
+				<title>The Settings Dialog, Diff/Merge Advanced Dialog</title>
+				<graphic fileref="../images/SettingsProgsAdv.png"/>
+			</figure>
+			In the advanced settings, you can define a different diff and merge
+			program for every file extension. For instance you could associate
+			Photoshop as the <quote>Diff</quote> Program for <filename>.jpg</filename> files :-)
+		</para>
+		<para>
+			To associate using a file extension, you need to specify the extension.
+			Use <literal>.bmp</literal> to describe Windows bitmap files.
+		</para>
+	</sect3>
+	<sect3 id="tgit-dug-settings-alternativeeditor">
+		<title>Alternative editor</title>
+		<?dbhh topicname="HIDD_SETTINGSPROGSALTERNATIVEEDITOR"?>
+		<figure id="tgit-dug-settings-dia-6b">
+			<title>The Settings Dialog, Alternative editor Page</title>
+			<graphic fileref="../images/SettingsAlternativeEditor.png"/>
+		</figure>
+		<para>
+			The original Windows NotePad program does not behave
+			well on files which do not have standard CR-LF
+			line-endings. However, a lot of git configuration files do not have
+			a standard CR-LF line-ending. Because of this TortoiseGit uses a free
+			(shipped) NotePad replacement
+			<ulink url="http://www.flos-freeware.ch/notepad2.html">
+				<citetitle>Notepad2</citetitle>
+			</ulink>
+			which displays the line-endings correctly by default.
+		</para>
+	</sect3>
+</sect2>
